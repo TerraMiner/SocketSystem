@@ -1,0 +1,15 @@
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.9.0"
+}
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    from configurations.runtimeClasspath.collect(project.&zipTree)
+    duplicatesStrategy DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes("Main-Class":"ua.terra.Main")
+    }
+}
