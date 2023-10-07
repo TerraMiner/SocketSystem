@@ -13,6 +13,6 @@ class PacketCircularPing : Packet() {
 
     override fun SocketClient.handleClient() {
         val time = time + System.currentTimeMillis()
-        println("Пинг: $time мс.")
+        println("Ping: $time ms.")
     }
 }

@@ -13,6 +13,6 @@ class PacketGetIp(var address: IpAddress? = null) : Packet() {
 
     override fun SocketClient.handleClient() {
         IP = address ?: return
-        println("Ваш IP: $IP")
+        println("Your IP: $IP")
     }
 }

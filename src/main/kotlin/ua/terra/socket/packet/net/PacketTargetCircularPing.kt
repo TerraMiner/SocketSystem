@@ -11,7 +11,7 @@ class PacketTargetCircularPing(from: IpAddress, to: IpAddress) : PacketTarget(fr
 
     override fun SocketServer.ClientHandler.handleServer() {
         (server.clients[to] ?: run {
-            sendPacket(PacketString("Получатель не найден!"))
+            sendPacket(PacketString("Recipient not found!"))
             return
         }).sendPacket(this@PacketTargetCircularPing)
     }
@@ -19,12 +19,12 @@ class PacketTargetCircularPing(from: IpAddress, to: IpAddress) : PacketTarget(fr
     override fun SocketClient.handleClient() {
         if (!isConfirmed) {
             time += System.currentTimeMillis()
-            println("Пинг от (${from}): ${time} мс.")
+            println("Pinged from (${from}): $time ms.")
             isConfirmed = true
             sendPacket(this@PacketTargetCircularPing)
             return
         }
-        println("Пинг к ($from): $time мс.")
+        println("Ping to ($from): $time ms.")
     }
 
 }

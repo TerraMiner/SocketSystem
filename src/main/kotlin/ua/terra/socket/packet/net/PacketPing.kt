@@ -13,7 +13,7 @@ class PacketPing : Packet() {
     }
 
     override fun SocketClient.handleClient() {
-        println("Пинг: $time мс.")
+        println("Ping: $time ms.")
     }
 
 }

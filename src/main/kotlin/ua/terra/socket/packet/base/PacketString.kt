@@ -9,6 +9,6 @@ open class PacketString(val content: String) : Packet() {
     }
 
     override fun SocketClient.handleClient() {
-        println("Сервер: $content")
+        println("Server: $content")
     }
 }

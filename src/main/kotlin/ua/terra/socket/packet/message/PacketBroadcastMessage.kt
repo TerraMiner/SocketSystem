@@ -13,7 +13,7 @@ class PacketBroadcastMessage(content: String) : PacketString(content) {
     }
 
     override fun SocketClient.handleClient() {
-        println("Объявление: ${content}")
+        println("Announcement: ${content}")
     }
 
 }

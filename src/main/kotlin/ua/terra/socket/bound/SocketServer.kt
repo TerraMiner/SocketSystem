@@ -11,13 +11,13 @@ import java.net.SocketException
 import java.util.concurrent.ConcurrentHashMap
 
 
-class SocketServer(val serverAddress: IpAddress) {
+class SocketServer(private val serverAddress: IpAddress) {
     val clients = ConcurrentHashMap<IpAddress, ClientHandler>()
     private var isRunning = true
 
     fun startServer() {
         val serverSocket = ServerSocket(serverAddress.port)
-        println("Сервер запущен! ($serverAddress)")
+        println("The server is running! ($serverAddress)")
 
         while (isRunning) {
             try {
@@ -25,7 +25,7 @@ class SocketServer(val serverAddress: IpAddress) {
 
                 clients[client.IP] = client
 
-                println("Новый клиент подключился: ${client.IP}")
+                println("New client connected: ${client.IP}")
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -33,7 +33,7 @@ class SocketServer(val serverAddress: IpAddress) {
         }
 
         serverSocket.close()
-        println("Сервер выключен!")
+        println("Server is turned off!")
     }
 
     inner class ClientHandler(
@@ -61,6 +61,7 @@ class SocketServer(val serverAddress: IpAddress) {
 
         private fun disconnectClient() {
             clients.remove(IP)
+            println("Client disconnected: $IP")
             io.close()
             socket.close()
         }
@@ -71,7 +72,7 @@ class SocketServer(val serverAddress: IpAddress) {
 
         fun sendMessage(from: IpAddress, to: IpAddress, message: String) {
             clients.getOrElse(to) {
-                sendPacket(PacketTargetMessage(to, from, "Адрессат не найден!"))
+                sendPacket(PacketTargetMessage(to, from, "Recipient not found!"))
                 return
             }.sendPacket(PacketTargetMessage(from, to, message))
         }

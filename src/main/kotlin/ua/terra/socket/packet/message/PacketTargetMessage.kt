@@ -11,6 +11,6 @@ class PacketTargetMessage(from: IpAddress, to: IpAddress, val content: String) :
     }
 
     override fun SocketClient.handleClient() {
-        println("$from -> Вы($to): $content")
+        println("$from -> You($to): $content")
     }
 }

@@ -41,19 +41,22 @@ fun SocketClient.joinMessenger() {
 
                 content.startsWith("/ping") -> {
                     val allArgs = content.split(" ")
+
+                    if (allArgs.size < 2) continue
+
                     val args = allArgs.drop(1)
 
                     val type = args[0]
 
+                    if (args.size < 3) continue
+
                     when (type) {
                         "self" -> {
-                            if (args.size < 3) continue
                             val delay = args.getOrNull(1)?.toIntOrNull() ?: continue
                             val count = args.getOrNull(2)?.toIntOrNull() ?: continue
                             pingSelf(delay, count)
                         }
                         "server" -> {
-                            if (args.size < 3) continue
                             val delay = args.getOrNull(1)?.toIntOrNull() ?: continue
                             val count = args.getOrNull(2)?.toIntOrNull() ?: continue
                             pingServer(delay, count)

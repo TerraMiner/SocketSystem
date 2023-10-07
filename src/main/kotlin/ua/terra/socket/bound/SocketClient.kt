@@ -15,7 +15,7 @@ import ua.terra.socket.utils.sleep
 import java.net.Socket
 import java.net.SocketException
 
-class SocketClient(val serverAddress: IpAddress) {
+class SocketClient(private val serverAddress: IpAddress) {
     private lateinit var socket: Socket
     private lateinit var io: SocketIO
     lateinit var IP: IpAddress
@@ -37,7 +37,7 @@ class SocketClient(val serverAddress: IpAddress) {
                         e.printStackTrace()
                     }
                     connected = false
-                    println("Потеряно соеденение с сервером!")
+                    println("Lost connection to the server!")
                     createConnection()
                 }
             }
@@ -56,7 +56,7 @@ class SocketClient(val serverAddress: IpAddress) {
     fun sendMessage(address: String, message: String) {
         PacketTargetMessage(IP, IpAddress.get(address), message).edit {
             sendPacket(this)
-            println("Вы($from) -> $to: $message")
+            println("You($from) -> $to: $message")
         }
     }
 
@@ -99,11 +99,11 @@ class SocketClient(val serverAddress: IpAddress) {
             runCatching {
                 socket = Socket(serverAddress.ip, serverAddress.port)
                 io = SocketIO(socket!!)
-                println("Подключено к серверу $serverAddress")
+                println("Connected to server $serverAddress")
                 connected = true
             }.getOrElse {
                 connected = false
-                println("Не удалось подключиться к серверу. Попытка переподключения через 5 секунд...")
+                println("Failed to connect to the server. Attempting to reconnect after 5 seconds...")
                 Thread.sleep(5000)
             }
         }
